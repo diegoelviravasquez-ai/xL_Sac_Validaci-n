@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="es" data-tema="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El SAC, explicado</title>
+<style>
+  :root{
+    --bg:#faf7f2; --surface:#fff; --panel:#f3efe8; --ink:#241f1a; --soft:#574f45; --faint:#7a7065;
+    --line:rgba(60,40,20,.13); --line-soft:rgba(60,40,20,.07);
+    --accent:#c0562a; --accent-soft:rgba(192,86,42,.10);
+    --auto:#1f7a6b; --auto-soft:rgba(31,122,107,.12);
+    --comm:#6a4a9c; --comm-soft:rgba(106,74,156,.12);
+    --tierra:#9a6611; --tierra-soft:rgba(154,102,17,.13);
+    --fs:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif;
+    --serif:"Iowan Old Style","Palatino",Georgia,"Times New Roman",serif;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-tema="light"]){
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15);
+    --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16);
+    --comm:#b79ae6; --comm-soft:rgba(183,154,230,.16);
+    --tierra:#e0a53f; --tierra-soft:rgba(224,165,63,.15);
+    color-scheme:dark;
+  }}
+  :root[data-tema="dark"]{
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15);
+    --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16);
+    --comm:#b79ae6; --comm-soft:rgba(183,154,230,.16);
+    --tierra:#e0a53f; --tierra-soft:rgba(224,165,63,.15);
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:18px/1.6 var(--fs);-webkit-font-smoothing:antialiased;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .wrap{max-width:820px;margin:0 auto;padding:30px 4px 90px}
+  .glifo{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .tgl{position:fixed;top:14px;right:14px;z-index:9;background:var(--surface);border:1px solid var(--line);color:var(--soft);width:42px;height:42px;border-radius:12px;cursor:pointer;display:grid;place-items:center}
+  .tgl:focus-visible{outline:3px solid var(--auto);outline-offset:2px}
+  .tgl .glifo{width:20px;height:20px}
+
+  .hero{padding:46px 0 30px;border-bottom:1px solid var(--line)}
+  .kick{font:700 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  h1{font:600 clamp(34px,8vw,58px)/1.05 var(--serif);letter-spacing:-.02em;margin:0 0 18px;text-wrap:balance}
+  .sub{font:300 clamp(19px,3.4vw,24px)/1.4 var(--fs);color:var(--soft);max-width:34ch;text-wrap:pretty;margin:0}
+
+  section{padding:46px 0;border-bottom:1px solid var(--line)}
+  .seclabel{font:700 12px var(--fs);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:0 0 10px}
+  h2{font:600 clamp(25px,5vw,36px)/1.12 var(--serif);letter-spacing:-.01em;margin:0 0 16px;text-wrap:balance}
+  .intro{font:300 clamp(18px,2.6vw,21px)/1.55 var(--fs);color:var(--soft);max-width:62ch;margin:0 0 22px;text-wrap:pretty}
+  p{margin:0 0 15px;max-width:68ch}
+  .lead{color:var(--ink)}
+  strong,b{font-weight:650}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+  .pill{font:600 13.5px var(--fs);color:var(--soft);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 18px}
+  .flow .st{font:600 14px var(--fs);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 13px}
+  .flow .ar{color:var(--faint)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:4px 0}
+  @media(max-width:660px){.grid2{grid-template-columns:1fr}}
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+  .box.alt{background:var(--panel)}
+  .box h3{display:flex;gap:10px;align-items:center;font:600 18px var(--serif);margin:0 0 10px}
+  .box h3 .glifo{width:20px;height:20px;flex:none}
+  .box.trad h3 .glifo{color:var(--faint)} .box.sac h3 .glifo{color:var(--auto)}
+  .box ul{margin:0;padding-left:20px} .box li{font-size:15px;color:var(--soft);line-height:1.5;margin-bottom:8px}
+  .box li b{color:var(--ink)}
+  .tagline{font:600 12px var(--fs);letter-spacing:.06em;text-transform:uppercase;margin:0 0 6px}
+  .box.trad .tagline{color:var(--faint)} .box.sac .tagline{color:var(--auto)}
+
+  .steps{list-style:none;margin:18px 0 0;padding:0;counter-reset:s}
+  .steps li{position:relative;padding:14px 0 14px 50px;border-top:1px solid var(--line-soft)}
+  .steps li:first-child{border-top:none}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);font:700 15px var(--fs);display:grid;place-items:center}
+  .steps li b{display:block;font-size:17px;margin-bottom:2px}
+  .steps li span{font-size:15px;color:var(--soft)}
+
+  .ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 2px}
+  @media(max-width:660px){.ladder{grid-template-columns:1fr 1fr}}
+  .lv{border:1px solid var(--line);border-radius:12px;padding:13px;background:var(--surface)}
+  .lv b{display:block;font-size:15px;margin-bottom:3px} .lv span{font-size:12.5px;color:var(--faint);line-height:1.4}
+  .lv.d{border-color:var(--auto);background:var(--auto-soft)}
+
+  .marcos{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .marco{font:600 13px var(--fs);border-radius:10px;padding:8px 13px;background:var(--panel);border:1px solid var(--line);color:var(--soft)}
+  .marco b{color:var(--ink)}
+
+  .callout{background:var(--auto-soft);border:1px solid var(--auto);border-radius:16px;padding:20px 22px;margin:18px 0 0}
+  .callout b{color:var(--ink)}
+  .code{font:600 13.5px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink);overflow-x:auto;white-space:pre}
+
+  .brechas{width:100%;border-collapse:collapse;margin:18px 0 0;font-size:14.5px}
+  .brechas th{text-align:left;font:700 11px var(--fs);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:0 10px 8px;border-bottom:1px solid var(--line)}
+  .brechas td{padding:11px 10px;border-bottom:1px solid var(--line-soft);color:var(--soft);vertical-align:top}
+  .brechas td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+  .brechas td b{color:var(--auto)}
+  @media(max-width:560px){.brechas,.brechas tbody,.brechas tr,.brechas td{display:block;width:100%}.brechas thead{display:none}.brechas tr{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:10px}.brechas td{border:none;padding:3px 0}.brechas td:first-child{font-size:16px}}
+  .guard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:10px}
+  .guard h3{font:600 18px var(--serif);margin:0 0 10px}
+  .guard p{font-size:15px;color:var(--soft);margin:0;max-width:none}
+  .honesto{display:inline-flex;gap:7px;align-items:center;font:600 12.5px var(--fs);color:var(--auto);background:var(--auto-soft);border-radius:999px;padding:6px 13px;margin-top:10px}
+  .honesto .glifo{width:15px;height:15px}
+  .foot{text-align:center;color:var(--faint);font-size:14px;margin-top:40px;line-height:1.6}
+</style>
+<!--lectura-facil-v1-->
+<style id="lf-style">
+  /* ===== Modo Lectura fácil (dislexia) · opt-in, DUA: otra forma de representar ===== */
+  html[data-lectura="facil"] body{
+    font-family:Verdana,Tahoma,"Trebuchet MS",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+    letter-spacing:.035em; word-spacing:.09em; line-height:1.75;
+  }
+  html[data-lectura="facil"] p,
+  html[data-lectura="facil"] li,
+  html[data-lectura="facil"] .st-b,
+  html[data-lectura="facil"] .ds,
+  html[data-lectura="facil"] .sub,
+  html[data-lectura="facil"] .lead,
+  html[data-lectura="facil"] .nd{
+    max-width:64ch; text-align:left !important; line-height:1.8;
+  }
+  html[data-lectura="facil"] em,
+  html[data-lectura="facil"] i{ font-style:normal; font-weight:600; }
+  html[data-lectura="facil"] h1,
+  html[data-lectura="facil"] h2,
+  html[data-lectura="facil"] h3{ letter-spacing:.005em; word-spacing:.04em; }
+  /* botón flotante */
+  .lf-btn{position:fixed;left:16px;bottom:16px;z-index:99999;display:inline-flex;align-items:center;gap:8px;
+    background:#1f7a6b;color:#fff;border:0;border-radius:999px;cursor:pointer;
+    font:600 14px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    padding:11px 15px;box-shadow:0 8px 22px -10px rgba(0,0,0,.5)}
+  .lf-btn:hover{filter:brightness(1.06)}
+  .lf-btn:focus-visible{outline:3px solid #c0562a;outline-offset:2px}
+  .lf-btn .b{font-weight:800;font-size:15px;letter-spacing:.02em}
+  html[data-lectura="facil"] .lf-btn{background:#c0562a}
+  @media (max-width:420px){ .lf-btn{padding:10px 13px;font-size:13px} }
+  @media print{ .lf-btn{display:none} }
+</style>
+
+</head>
+<body>
+<button class="tgl" id="tgl" aria-label="Cambiar entre modo claro y oscuro"><svg class="glifo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></svg></button>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kick">Método y fundamentos — para Ana García-Valcárcel</p>
+    <h1>El SAC, explicado.</h1>
+    <p class="sub">Qué es, en qué se apoya y —sobre todo— cómo evalúa: por procesos, no por instrumentos; con variables codificadas, no con una escala.</p>
+  </header>
+
+  <section>
+    <p class="seclabel">El marco</p>
+    <h2>Inteligencia extendida (xI).</h2>
+    <p class="intro lead">No es "usar IA". Es la <b>calidad del acoplamiento</b> entre una persona y la herramienta lo que decide si aprende.</p>
+    <p>La mente se extiende más allá del cráneo: usamos artefactos para pensar (Clark &amp; Chalmers, 1998). La pregunta no es si se usa la herramienta, sino si al usarla la persona queda <b>más capaz</b> o más dependiente. Esa es la distinción clásica entre los efectos <b>CON</b> la tecnología y los efectos <b>DE</b> la tecnología (Salomon, Perkins &amp; Globerson, 1991): lo que importa no es el rendimiento mientras se usa el apoyo, sino lo que queda cuando se retira.</p>
+    <p>El coeficiente <b>&kappa;</b> es la única métrica que distingue <b>amplificar</b> de <b>atrofiar</b>. Está demostrado solo matemáticamente; que una buena lectura calibrada mejore el aprendizaje es hipótesis, no resultado.</p>
+    <div class="pills"><span class="pill">Mente extendida · Clark &amp; Chalmers</span><span class="pill">Efecto CON vs. DE · Salomon et al.</span><span class="pill">&kappa; · amplificar vs. atrofiar</span></div>
+  </section>
+
+  <section>
+    <p class="seclabel">El sistema</p>
+    <h2>El SAC — Sistema de Aprendizaje Circunstancial.</h2>
+    <p class="intro">No empieza en un contenido fijo: empieza en la <b>circunstancia</b> del alumno — qué quiere hacer hoy y cómo llega. De ahí, un bucle que localiza dónde se rompe el aprendizaje y actúa, sin sustituir al docente.</p>
+    <p style="margin-bottom:6px"><b>El motor MCR</b> (Modelo de Comprensión Relacional) corre en cinco pasos:</p>
+    <div class="flow"><span class="st">Describe</span><span class="ar">→</span><span class="st">Verifica</span><span class="ar">→</span><span class="st">Localiza</span><span class="ar">→</span><span class="st">Interviene</span><span class="ar">→</span><span class="st">Mide</span></div>
+    <div class="grid2">
+      <div class="box"><h3><svg class="glifo" viewBox="0 0 24 24"><path d="M14 7a4 4 0 0 0-5 5l-5 5 2 2 5-5a4 4 0 0 0 5-5l-2 2-2-2 2-2z"/></svg>Lo que hace</h3>
+        <ul><li><b>Clasifica, no genera:</b> localiza la barrera; el alumno nunca ve texto libre del modelo.</li><li><b>Autoinforme, no inferencia:</b> el alumno declara su estado; el sistema no lo infiere (AI Act 5.1.f).</li><li><b>Hipótesis de barrera:</b> audita tarea, criterio y entorno antes que a la persona (modelo social).</li></ul></div>
+      <div class="box"><h3><svg class="glifo" viewBox="0 0 24 24"><path d="M7 11V6a2 2 0 0 1 4 0v5 M11 8a2 2 0 0 1 4 0v3 M15 9a2 2 0 0 1 4 0v5a6 6 0 0 1-6 6h-2a5 5 0 0 1-4-2l-3-4a2 2 0 0 1 3-2l2 2"/></svg>Las tres salidas de dato</h3>
+        <ul><li><b>Al alumno:</b> autoconocimiento + soberanía sobre &kappa;.</li><li><b>Al docente:</b> adaptaciones + juicio ciego.</li><li><b>A la institución:</b> &kappa; re-acoplador (el agregado que cierra el desacople).</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="seclabel">Cómo decide y cómo audita</p>
+    <h2>Juicio ciego · hipótesis de barrera.</h2>
+    <p class="intro lead">Dos mecanismos que protegen el método: uno impide que la IA <b>sustituya</b> el juicio del docente; el otro impide que la barrera se dé por <b>supuesta en la persona</b>.</p>
+    <div class="grid2">
+      <div class="box sac"><span class="tagline">El docente decide primero</span><h3><svg class="glifo" viewBox="0 0 24 24"><path d="M12 4v16 M6 20h12 M5 7h14 M5 7l-3 6h6z M19 7l-3 6h6z"/></svg>Juicio ciego</h3>
+        <p style="font-size:15px;color:var(--soft);margin:0 0 10px">El docente decide <b>antes</b> de ver la sugerencia del sistema, que <b>nunca</b> se rotula "IA": es una opción más a juzgar, no una orden.</p>
+        <div class="flow" style="margin:0 0 10px"><span class="st">Docente juzga</span><span class="ar">→</span><span class="st">Se revela</span><span class="ar">→</span><span class="st">Decide si la toma</span></div>
+        <ul><li>Evita el <b>sesgo de automatización</b>: no se obedece a la máquina.</li><li>Preserva la <b>agencia profesional</b> del docente.</li><li>Da una medida de <b>acuerdo máquina–humano</b>.</li></ul></div>
+      <div class="box sac"><span class="tagline">La barrera no se supone en la persona</span><h3><svg class="glifo" viewBox="0 0 24 24"><path d="M10 10m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0 M15 15l5 5"/></svg>Hipótesis de barrera</h3>
+        <p style="font-size:15px;color:var(--soft);margin:0 0 10px">La dificultad se formula como <b>hipótesis con una prueba que puede fallar</b> — no como etiqueta de déficit.</p>
+        <ul><li>Cuatro focos: <b>tarea · entorno · criterio · persona</b>.</li><li>Audita el <b>entorno antes</b> que a la persona (modelo social de la discapacidad).</li><li>Si la prueba falla, se cambia la hipótesis — no se culpa al alumno.</li></ul></div>
+    </div>
+    <p style="margin-top:18px">No son adornos: cada mecanismo cierra una <b>brecha del desacoplamiento institucional</b> (Meyer &amp; Rowan, 1977) — la distancia entre lo que una institución dice que hace y lo que de verdad ocurre en el aula.</p>
+    <table class="brechas">
+      <thead><tr><th>Brecha</th><th>Síntoma</th><th>Lo cierra</th></tr></thead>
+      <tbody>
+        <tr><td>Mandato ↔ Práctica</td><td>"La formación es ceremonia"</td><td><b>Juicio ciego</b></td></tr>
+        <tr><td>Supuesto ↔ Materia</td><td>"Se presume red que no existe"</td><td><b>Los 4 ceros</b></td></tr>
+        <tr><td>Estructura ↔ Núcleo</td><td>"Desplegar ≠ aprender"</td><td><b>Re-acoplador κ</b></td></tr>
+        <tr><td>Diseño ↔ Cola excluida</td><td>"El margen no llega"</td><td><b>Hipótesis de barrera</b></td></tr>
+        <tr><td>Contenido ↔ Sentido local</td><td>"Lo importado no resuena"</td><td><b>Comprensión demostrable</b></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <p class="seclabel">La cara sustractiva de enseñar</p>
+    <h2>Pedagogía negativa.</h2>
+    <p class="intro lead">El DUA nos enseña a <b>ofrecer</b> múltiples medios, opciones y apoyos. La pedagogía negativa es su complemento práctico: saber también <b>cuándo un apoyo ya sobra</b> — cuándo retirarlo para que la persona ande sola.</p>
+    <p>Ahí entra la pedagogía negativa: no enseñar añadiendo, sino <b>localizar el punto exacto en que se interrumpe la cadena</b> comprensión → organización → expresión, y retirar el apoyo <em>antes</em> de acumular adaptaciones que vuelven dependiente. Es la cara sustractiva de enseñar: saber qué <em>no</em> funciona para este alumno concreto, y quitarlo.</p>
+    <p>Se apoya en el <b>fracaso productivo</b> (Kapur, 2008): cierta dificultad bien dosificada enseña más que el camino allanado. Por eso el andamio de <b>procesamiento</b> se desvanece al demostrar dominio — y se restituye sin castigo si el error reaparece. Con una frontera innegociable:</p>
+    <div class="grid2">
+      <div class="box sac"><span class="tagline">No se retira · es derecho</span><h3>Apoyo de acceso</h3><ul><li>Audio, texto fácil, glosa, lengua propia.</li><li>Es accesibilidad (DUA), no andamio. Permanece siempre.</li></ul></div>
+      <div class="box trad"><span class="tagline">Se desvanece · es temporal</span><h3>Apoyo de procesamiento</h3><ul><li>La pista al error, la ayuda para pensar.</li><li>Se retira al dominar; vuelve, sin castigo, si hace falta.</li></ul></div>
+    </div>
+    <div class="callout">No confundir accesibilidad con andamio es el corazón de la pedagogía negativa: <b>retirar lo que estorba sin retirar nunca lo que es derecho.</b></div>
+  </section>
+
+  <section>
+    <p class="seclabel">Qué significa comprender</p>
+    <h2>Comprensión demostrable.</h2>
+    <p class="intro">Comprender ≠ reproducir ≠ ejecutar. Un ejercicio bien resuelto está <em>ejecutado</em>, no necesariamente <em>comprendido</em>. Se demuestra comprensión cuando se hacen, de forma observable, al menos <b>3 de 4</b> operaciones:</p>
+    <ol class="steps">
+      <li><b>Reformula</b><span>Dice con sus palabras por qué es correcto.</span></li>
+      <li><b>Transfiere</b><span>Lo aplica a un caso nuevo — el sello de la comprensión profunda (Wiggins &amp; McTighe).</span></li>
+      <li><b>Objeta</b><span>Explica por qué otra respuesta, que parecía válida, falla.</span></li>
+      <li><b>Límites</b><span>Sabe cuándo NO se aplica.</span></li>
+    </ol>
+    <p style="margin:18px 0 6px"><b>Cuatro estados</b>, según cuántas operaciones aparecen — y el umbral ≥3/4 tolera una ausencia:</p>
+    <div class="ladder">
+      <div class="lv"><b>Ilusorio</b><span>Cree haber entendido; sin conducta que lo muestre.</span></div>
+      <div class="lv"><b>Reproducido</b><span>Repite lo correcto sin reconstruirlo.</span></div>
+      <div class="lv"><b>Ejecutado</b><span>Resuelve, pero no explica ni transfiere.</span></div>
+      <div class="lv d"><b>Demostrado</b><span>≥3/4: comprensión profunda.</span></div>
+    </div>
+    <div class="callout">Mide <b>conducta, no autoinforme</b>: el estado "ilusorio" queda fuera por diseño. No es una verdad metafísica, es un <b>criterio operativo</b> honesto sobre su alcance.</div>
+  </section>
+
+  <section>
+    <p class="seclabel">El sistema de evaluación</p>
+    <h2>Procesos, no instrumentos.</h2>
+    <p class="intro lead">La diferencia metodológica de fondo: el SAC no cuelga el juicio de un <b>instrumento</b> único (un test, una escala) que clasifica y certifica. Evalúa el <b>proceso</b>: las operaciones que la persona realiza y su trayectoria.</p>
+    <div class="grid2">
+      <div class="box trad"><span class="tagline">Evaluación por instrumentos</span><h3><svg class="glifo" viewBox="0 0 24 24"><path d="M4 5h16v11H4z M9 20h6 M12 16v4"/></svg>La tradición</h3>
+        <ul><li>Clasificar, seleccionar, certificar.</li><li>El test como <b>único</b> instrumento de recogida.</li><li>Psicometría del <b>resultado</b>; comparación con la norma.</li><li>El alumno no participa del proceso.</li></ul></div>
+      <div class="box sac"><span class="tagline">Evaluación por procesos</span><h3><svg class="glifo" viewBox="0 0 24 24"><path d="M3 12h4l3 7 4-14 3 7h4"/></svg>El SAC</h3>
+        <ul><li>Regula el aprendizaje mientras ocurre (formativa).</li><li>Observa las <b>operaciones</b> y la trayectoria <b>CON vs. SIN</b> apoyo.</li><li>Rúbrica <b>criterial</b> (punto de corte ≥3/4), no escala Likert.</li><li>El alumno se autoevalúa y gana soberanía.</li></ul></div>
+    </div>
+    <p style="margin-top:18px">No es un rechazo de los instrumentos validados — al contrario. Un buen instrumento de competencia digital que mide por resolución de problemas reales (p. ej. <b>ECODIES</b>, Casillas-Martín, Cabezas-González &amp; García-Valcárcel, 2020) es complementario: aporta el anclaje psicométrico que una evaluación de proceso, por sí sola, no da. El SAC es un <b>instrumento de medida de proceso</b>, no una prueba de eficacia.</p>
+  </section>
+
+  <section>
+    <p class="seclabel">Cómo se vuelve medible</p>
+    <h2>Codificación de variables.</h2>
+    <p class="intro">Para evaluar un proceso sin caer en lo subjetivo, las conductas observables se <b>codifican</b> en categorías de una <b>lista cerrada</b>. No se puntúa una impresión: se clasifica un comportamiento.</p>
+    <div class="grid2">
+      <div class="box"><h3><svg class="glifo" viewBox="0 0 24 24"><path d="M4 7h16 M4 12h10 M4 17h7"/></svg>Las variables codificadas</h3>
+        <ul><li><b>Las 4 operaciones</b> de comprensión: presente / ausente.</li><li><b>Taxonomía del error:</b> tipo de barrera (categoría, editable y aprobable por el docente).</li><li><b>Hipótesis de barrera:</b> tarea / criterio / entorno / persona.</li><li><b>Disposición:</b> estado declarado por autoinforme (no inferido).</li></ul></div>
+      <div class="box alt"><h3><svg class="glifo" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z M14 3v4h4 M9 13h6 M9 17h6"/></svg>La salida es cerrada</h3>
+        <p style="margin:0 0 10px;font-size:15px;color:var(--soft)">Cuando hay modelo, clasifica contra una lista cerrada y valida el JSON — nunca texto libre:</p>
+        <div class="code">{ "capa": "comprender",
+  "operacion": "transfiere",
+  "estado": "ejecutado",
+  "barrera": "criterio",
+  "andamio": "parcial" }</div></div>
+    </div>
+    <div class="callout"><b>Cómo se ancla la calidad del esquema</b> (no con Cronbach ni análisis factorial — esto es criterial, no una escala): <b>fiabilidad interjueces</b> — una muestra se codifica por varios jueces y se mide el acuerdo con <b>Kappa de Cohen</b> (el estándar: valores de 0,80–0,90 son fuertes) — más el <b>acuerdo máquina-humano</b> del clasificador y la <b>consistencia del punto de corte</b> (≥3/4).</div>
+  </section>
+
+  <section>
+    <p class="seclabel">Rigor — lo que NO hace</p>
+    <h2>Dónde nos paramos.</h2>
+    <p class="intro">La honestidad sobre el alcance es parte del método, no una nota al pie.</p>
+    <div class="marcos">
+      <span class="marco"><b>No</b> infiere emoción ni atención (AI Act 5.1.f)</span>
+      <span class="marco"><b>No</b> usa MBTI ni estilos de aprendizaje (desacreditados)</span>
+      <span class="marco"><b>No</b> perfila la personalidad del menor</span>
+      <span class="marco"><b>No</b> aplica psicometría de escala a una rúbrica criterial</span>
+      <span class="marco"><b>No</b> afirma eficacia: &kappa; es matemática; la causal → PID</span>
+      <span class="marco"><b>No</b> sube el dato a la nube (4 ceros)</span>
+    </div>
+    <div class="guard">
+      <h3>Guardarraíles de honestidad</h3>
+      <p>Instrumento de medida, no prueba de eficacia. "Huella de lectura", nunca "detección de atención". El audio se analiza y se descarta. La tablet no corre modelo: lo que clasifica vive en el nodo del aula. La validez causal la aporta el experimento preregistrado (PID), no el demo.</p>
+      <span class="honesto"><svg class="glifo" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>Si me ves inflar esto, párame — aunque lo haya pedido así</span>
+    </div>
+  </section>
+
+  <p class="foot">SAC · xI — Diego Elvira Vásquez · Inteligencia Extendida (xI) · Candidatura Hack4Edu 2026 (SENIOR) · ProFuturo × UPSA<br>Referencias: Clark &amp; Chalmers 1998 · Salomon, Perkins &amp; Globerson 1991 · Kapur 2008 · Wiggins &amp; McTighe 2005 · Casillas-Martín, Cabezas-González &amp; García-Valcárcel 2020 · EU AI Act 5.1.f</p>
+
+</div>
+<script>
+  (function(){
+    var t=document.getElementById('tgl');
+    function cur(){ return document.documentElement.getAttribute('data-tema')==='dark'||(document.documentElement.getAttribute('data-tema')!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'; }
+    t.addEventListener('click',function(){ document.documentElement.setAttribute('data-tema', cur()==='dark'?'light':'dark'); });
+  })();
+</script>
+<!--lectura-facil-v1-->
+<button class="lf-btn" id="lfBtn" type="button" aria-pressed="false" aria-label="Activar o desactivar el modo de lectura fácil para dislexia"><span class="b">Aa</span> Lectura fácil</button>
+<script>
+  (function(){
+    var K="emma-lectura", el=document.documentElement, b=document.getElementById("lfBtn");
+    function set(on){
+      el.setAttribute("data-lectura", on?"facil":"normal");
+      b.setAttribute("aria-pressed", on?"true":"false");
+      b.lastChild.textContent = on ? " Lectura fácil ✓" : " Lectura fácil";
+      try{ localStorage.setItem(K, on?"1":"0"); }catch(e){}
+    }
+    var saved="0"; try{ saved=localStorage.getItem(K)||"0"; }catch(e){}
+    set(saved==="1");
+    b.addEventListener("click", function(){ set(el.getAttribute("data-lectura")!=="facil"); });
+  })();
+</script>
+
+</body>
+</html>
