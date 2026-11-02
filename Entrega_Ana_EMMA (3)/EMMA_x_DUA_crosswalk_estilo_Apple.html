@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es" data-tema="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EMMA × DUA — el crosswalk</title>
+<style>
+  :root{
+    --bg:#faf7f2; --surface:#fff; --panel:#f3efe8; --ink:#241f1a; --soft:#574f45; --faint:#7a7065;
+    --line:rgba(60,40,20,.13); --line-soft:rgba(60,40,20,.07);
+    --accent:#c0562a; --accent-soft:rgba(192,86,42,.10);
+    --auto:#1f7a6b; --auto-soft:rgba(31,122,107,.12);
+    --comm:#6a4a9c; --comm-soft:rgba(106,74,156,.12);
+    --tierra:#9a6611; --tierra-soft:rgba(154,102,17,.13);
+    --fs:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif;
+    --serif:"Iowan Old Style","Palatino",Georgia,"Times New Roman",serif;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-tema="light"]){
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15);
+    --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16);
+    --comm:#b79ae6; --comm-soft:rgba(183,154,230,.16);
+    --tierra:#e0a53f; --tierra-soft:rgba(224,165,63,.15);
+    color-scheme:dark;
+  }}
+  :root[data-tema="dark"]{
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15);
+    --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16);
+    --comm:#b79ae6; --comm-soft:rgba(183,154,230,.16);
+    --tierra:#e0a53f; --tierra-soft:rgba(224,165,63,.15);
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:18px/1.6 var(--fs);-webkit-font-smoothing:antialiased;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .wrap{max-width:880px;margin:0 auto;padding:30px 4px 90px}
+  .glifo{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .tgl{position:fixed;top:14px;right:14px;z-index:9;background:var(--surface);border:1px solid var(--line);color:var(--soft);width:42px;height:42px;border-radius:12px;cursor:pointer;display:grid;place-items:center}
+  .tgl:focus-visible{outline:3px solid var(--auto);outline-offset:2px}
+  .tgl .glifo{width:20px;height:20px}
+
+  .hero{padding:46px 0 30px;border-bottom:1px solid var(--line)}
+  .kick{font:700 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  h1{font:600 clamp(34px,8vw,58px)/1.05 var(--serif);letter-spacing:-.02em;margin:0 0 18px;text-wrap:balance}
+  .sub{font:300 clamp(19px,3.4vw,24px)/1.4 var(--fs);color:var(--soft);max-width:36ch;text-wrap:pretty;margin:0}
+
+  section{padding:42px 0;border-bottom:1px solid var(--line)}
+  .seclabel{font:700 12px var(--fs);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+  .seclabel.p1{color:var(--accent)} .seclabel.p2{color:var(--auto)} .seclabel.p3{color:var(--comm)}
+  h2{font:600 clamp(24px,5vw,34px)/1.12 var(--serif);letter-spacing:-.01em;margin:0 0 6px;text-wrap:balance}
+  .why{font:400 16px var(--fs);color:var(--faint);margin:0 0 16px}
+  .intro{font:300 clamp(18px,2.6vw,21px)/1.55 var(--fs);color:var(--soft);max-width:64ch;margin:0 0 20px;text-wrap:pretty}
+  p{margin:0 0 15px;max-width:70ch}
+  b,strong{font-weight:650}
+
+  table.cw{width:100%;border-collapse:collapse;font-size:14.5px}
+  table.cw thead th{text-align:left;font:700 11px var(--fs);letter-spacing:.05em;text-transform:uppercase;color:var(--faint);padding:0 12px 9px;border-bottom:1px solid var(--line)}
+  table.cw td{padding:13px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top;line-height:1.48}
+  table.cw td.pa{color:var(--ink);font-weight:600;white-space:nowrap}
+  table.cw td.em{color:var(--soft)}
+  table.cw td.ad{color:var(--soft)} table.cw td.ad b{color:var(--auto)}
+  table.cw tr.key td{background:var(--auto-soft)}
+  table.cw tr.key td.ad b{color:var(--auto)}
+  @media(max-width:620px){
+    table.cw,table.cw tbody,table.cw tr,table.cw td{display:block;width:100%}
+    table.cw thead{display:none}
+    table.cw tr{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px;background:var(--surface)}
+    table.cw tr.key{border-color:var(--auto)}
+    table.cw td{border:none;padding:3px 0}
+    table.cw td.pa{font-size:16px;margin-bottom:4px}
+    table.cw td.em::before{content:"EMMA implementa — ";font-weight:700;color:var(--faint);font-size:12px}
+    table.cw td.ad::before{content:"El SAC añade — ";font-weight:700;color:var(--auto);font-size:12px}
+  }
+
+  .thesis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:6px 0 2px}
+  @media(max-width:660px){.thesis{grid-template-columns:1fr}}
+  .tcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .tcard .glifo{width:24px;height:24px;color:var(--auto);margin-bottom:10px}
+  .tcard b{display:block;font:600 17px var(--serif);margin-bottom:4px}
+  .tcard span{font-size:14.5px;color:var(--soft);line-height:1.45}
+
+  .callout{background:var(--auto-soft);border:1px solid var(--auto);border-radius:16px;padding:20px 22px;margin:22px 0 0}
+  .callout b{color:var(--ink)}
+  .hueco{background:var(--tierra-soft);border:1px solid var(--tierra);border-radius:14px;padding:14px 16px;margin:16px 0 0;font-size:14.5px;color:var(--ink)}
+  .hueco b{color:var(--tierra)}
+  .foot{text-align:center;color:var(--faint);font-size:14px;margin-top:40px;line-height:1.6}
+  .honesto{display:inline-flex;gap:7px;align-items:center;font:600 12.5px var(--fs);color:var(--auto);background:var(--auto-soft);border-radius:999px;padding:6px 13px;margin-top:10px}
+  .honesto .glifo{width:15px;height:15px}
+</style>
+<!--lectura-facil-v1-->
+<style id="lf-style">
+  /* ===== Modo Lectura fácil (dislexia) · opt-in, DUA: otra forma de representar ===== */
+  html[data-lectura="facil"] body{
+    font-family:Verdana,Tahoma,"Trebuchet MS",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+    letter-spacing:.035em; word-spacing:.09em; line-height:1.75;
+  }
+  html[data-lectura="facil"] p,
+  html[data-lectura="facil"] li,
+  html[data-lectura="facil"] .st-b,
+  html[data-lectura="facil"] .ds,
+  html[data-lectura="facil"] .sub,
+  html[data-lectura="facil"] .lead,
+  html[data-lectura="facil"] .nd{
+    max-width:64ch; text-align:left !important; line-height:1.8;
+  }
+  html[data-lectura="facil"] em,
+  html[data-lectura="facil"] i{ font-style:normal; font-weight:600; }
+  html[data-lectura="facil"] h1,
+  html[data-lectura="facil"] h2,
+  html[data-lectura="facil"] h3{ letter-spacing:.005em; word-spacing:.04em; }
+  /* botón flotante */
+  .lf-btn{position:fixed;left:16px;bottom:16px;z-index:99999;display:inline-flex;align-items:center;gap:8px;
+    background:#1f7a6b;color:#fff;border:0;border-radius:999px;cursor:pointer;
+    font:600 14px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    padding:11px 15px;box-shadow:0 8px 22px -10px rgba(0,0,0,.5)}
+  .lf-btn:hover{filter:brightness(1.06)}
+  .lf-btn:focus-visible{outline:3px solid #c0562a;outline-offset:2px}
+  .lf-btn .b{font-weight:800;font-size:15px;letter-spacing:.02em}
+  html[data-lectura="facil"] .lf-btn{background:#c0562a}
+  @media (max-width:420px){ .lf-btn{padding:10px 13px;font-size:13px} }
+  @media print{ .lf-btn{display:none} }
+</style>
+
+</head>
+<body>
+<button class="tgl" id="tgl" aria-label="Cambiar entre modo claro y oscuro"><svg class="glifo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></svg></button>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kick">Para Ana García-Valcárcel · el marco en su propia rejilla</p>
+    <h1>EMMA × DUA.</h1>
+    <p class="sub">Los 3 principios y las 9 pautas del CAST, columna a columna: cómo EMMA los lleva a la práctica — y los pone al alcance de cualquiera.</p>
+  </header>
+
+  <section style="border-bottom:1px solid var(--line)">
+    <p class="seclabel">La tesis</p>
+    <h2>El DUA marca el camino. EMMA le pone herramientas — y lo democratiza.</h2>
+    <p class="intro">El Diseño Universal para el Aprendizaje (CAST) es el marco, y EMMA lo honra por diseño. Lo que EMMA aporta son las <b>herramientas concretas</b> para ejercerlo en el aula real —offline, soberano y al alcance de cualquiera—, de modo que el aprendizaje personalizado deje de ser un privilegio. Tres de ellas:</p>
+    <div class="thesis">
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M14 7a4 4 0 0 0-5 5l-5 5 2 2 5-5a4 4 0 0 0 5-5l-2 2-2-2 2-2z"/></svg><b>Pedagogía negativa</b><span>Saber también cuándo retirar un apoyo, para que la persona ande sola.</span></div>
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M9 18h6 M10 21h4 M8 11a4 4 0 1 1 8 0c0 2-2 3-2 5h-4c0-2-2-3-2-5z"/></svg><b>La medida</b><span>Comprensión demostrable + κ: una forma concreta de saber que se comprendió.</span></div>
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z M5 20c0-4 3-6 7-6s7 2 7 6"/></svg><b>La frontera operativa</b><span>Acceso (derecho, no se retira) vs. procesamiento (temporal): la frontera, hecha operativa.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="seclabel p1">Principio I · el porqué</p>
+    <h2>Múltiples formas de implicación.</h2>
+    <p class="why">Captar el interés, sostener el esfuerzo, autorregularse.</p>
+    <table class="cw">
+      <thead><tr><th style="width:26%">Pauta (CAST)</th><th style="width:37%">EMMA implementa</th><th style="width:37%">La aportación de EMMA</th></tr></thead>
+      <tbody>
+        <tr><td class="pa">7 · Captar el interés</td><td class="em">Entrada circunstancial: elige qué hacer hoy; tarea auténtica, no un ejemplo de mentira.</td><td class="ad">La <b>circunstancia como coordenada</b> del aprendizaje, no solo un gancho de inicio.</td></tr>
+        <tr><td class="pa">8 · Sostener el esfuerzo</td><td class="em">Progreso diegético (sin XP ni rachas); κ sube al dejar de necesitar la ayuda.</td><td class="ad"><b>Restitución sin castigo</b> y fomento de pausas: motivación sana, no dependencia.</td></tr>
+        <tr><td class="pa">9 · Autorregulación</td><td class="em">Autoinforme de disposición; espejo metacognitivo ("esto te funciona / esto te cuesta").</td><td class="ad"><b>Autoinforme, no inferencia</b> (AI Act 5.1.f); sin test de personalidad (ni MBTI ni estilos).</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <p class="seclabel p2">Principio II · el qué</p>
+    <h2>Múltiples formas de representación.</h2>
+    <p class="why">Percepción, lenguaje y símbolos, comprensión.</p>
+    <table class="cw">
+      <thead><tr><th style="width:26%">Pauta (CAST)</th><th style="width:37%">EMMA implementa</th><th style="width:37%">La aportación de EMMA</th></tr></thead>
+      <tbody>
+        <tr><td class="pa">1 · Percepción</td><td class="em">Texto grande y fuente legible, audio, contraste, "reducir movimiento" — apoyos de acceso.</td><td class="ad">El acceso es <b>derecho</b>: estos apoyos <b>no se retiran nunca</b>.</td></tr>
+        <tr><td class="pa">2 · Lenguaje y símbolos</td><td class="em">Texto fácil, glosa, lengua propia; glifos claros en vez de jerga de producto.</td><td class="ad">La <b>glosa soberana</b>: la comunidad añade lo que hay que cuidar en su lengua.</td></tr>
+        <tr class="key"><td class="pa">3 · Comprensión</td><td class="em">Comprensión demostrable (4 operaciones, ≥3/4); andamio de procesamiento; hipótesis de barrera.</td><td class="ad"><b>Aquí está el núcleo:</b> pedagogía negativa — localiza el punto de interrupción y <b>gradúa el apoyo</b>, retirándolo cuando ya sobra. Una herramienta concreta al servicio de este principio.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <p class="seclabel p3">Principio III · el cómo</p>
+    <h2>Múltiples formas de acción y expresión.</h2>
+    <p class="why">Acción física, expresión y comunicación, funciones ejecutivas.</p>
+    <table class="cw">
+      <thead><tr><th style="width:26%">Pauta (CAST)</th><th style="width:37%">EMMA implementa</th><th style="width:37%">La aportación de EMMA</th></tr></thead>
+      <tbody>
+        <tr><td class="pa">4 · Acción física</td><td class="em">Objetivos táctiles ≥44px, navegable por teclado, foco visible — tablet compartida.</td><td class="ad">Acabado como <b>producto de tecnología educativa</b>: a11y por diseño, offline.</td></tr>
+        <tr><td class="pa">5 · Expresión y comunicación</td><td class="em">Demuestra la comprensión por escrito; "crea tu ayudante" (prompt portable).</td><td class="ad"><b>Hueco reconocido:</b> faltan más medios de expresión (voz / dictado) — a decidir contigo.</td></tr>
+        <tr><td class="pa">6 · Funciones ejecutivas</td><td class="em">Descomposición de tareas, planificación observable, nivel de las preguntas (Bloom/Costa).</td><td class="ad">Las FE se leen como <b>conducta observable</b>, nunca como etiqueta de la persona.</td></tr>
+      </tbody>
+    </table>
+    <div class="hueco"><b>Transparencia:</b> la pauta 5 es el único punto donde EMMA aún no cumple del todo el DUA — hoy se demuestra solo por escrito. Está marcado como decisión abierta, no escondido.</div>
+  </section>
+
+  <section style="border-bottom:none">
+    <p class="seclabel">En una frase</p>
+    <h2>EMMA no reemplaza al DUA: lo lleva a la práctica y lo democratiza.</h2>
+    <div class="callout">El DUA ofrece los principios; EMMA los convierte en herramientas que funcionan en el aula real: <b>cuándo retirar</b> un apoyo (pedagogía negativa), <b>cómo saber</b> que se comprendió (comprensión demostrable + κ), y <b>la frontera</b> entre accesibilidad (derecho) y andamiaje (temporal). Tres piezas que viven <em>dentro</em> del DUA, a su servicio — y que ponen el aprendizaje personalizado al alcance de cualquiera.</div>
+    <span class="honesto"><svg class="glifo" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>Instrumento de medida, no prueba de eficacia · validez causal → PID</span>
+  </section>
+
+  <section style="border-bottom:none">
+    <p class="seclabel">Lo que defendemos</p>
+    <h2>Personalización para todos — y autonomía por los dos lados.</h2>
+    <p class="intro">Toda decisión de diseño sirve a lo mismo: democratizar el aprendizaje personalizado y hacer más capaces —no más dependientes— al alumno y al profesor.</p>
+    <div class="thesis">
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18 M3 12h18 M12 3c3 3 3 15 0 18 M12 3c-3 3-3 15 0 18"/></svg><b>Democratización</b><span>Personalización al alcance de cualquiera: offline, soberana, software libre.</span></div>
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z M5 20c0-4 3-6 7-6s7 2 7 6"/></svg><b>Autonomía del alumno</b><span>La IA que te deja necesitarla menos, no más. κ sube al ganar autonomía.</span></div>
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M5 20c0-4 3-6 7-6s7 2 7 6 M12 3l9 4-9 4-9-4z"/></svg><b>Autonomía del profesor</b><span>Decide a ciegas; la IA clasifica, no sustituye. El juicio sigue siendo suyo.</span></div>
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z M9 12l2 2 4-4"/></svg><b>Desarrollo de competencias</b><span>Se cuidan a lo largo de la vida (SMC): se ganan, recaen, se restituyen.</span></div>
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M4 5h16v11H4z M9 20h6 M12 16v4"/></svg><b>Su marco de competencias digitales</b><span>DigComp + perfil ÁUREA (verde / ámbar / rojo), no una nota.</span></div>
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M12 4v16 M6 20h12 M5 7h14 M5 7l-3 6h6z M19 7l-3 6h6z"/></svg><b>Su sistema de evaluación</b><span>Por procesos, no por instrumentos: observa operaciones, no clasifica personas.</span></div>
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M3 12h4l3 7 4-14 3 7h4"/></svg><b>Cómo se mide</b><span>κ, comprensión demostrable y codificación por lista cerrada (fiabilidad interjueces).</span></div>
+      <div class="tcard"><svg class="glifo" viewBox="0 0 24 24"><path d="M14 7a4 4 0 0 0-5 5l-5 5 2 2 5-5a4 4 0 0 0 5-5l-2 2-2-2 2-2z"/></svg><b>Los frameworks de los motores</b><span>Cada capa con su fundamento: prosodia (leer), MCR (comprender), FE (pensar).</span></div>
+    </div>
+  </section>
+
+  <p class="foot">EMMA · SAC · xI — Diego Elvira Vásquez · Inteligencia Extendida (xI) · Marco: DUA / CAST (3 principios, 9 pautas) · Hack4Edu 2026</p>
+
+</div>
+<script>
+  (function(){
+    var t=document.getElementById('tgl');
+    function cur(){ return document.documentElement.getAttribute('data-tema')==='dark'||(document.documentElement.getAttribute('data-tema')!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'; }
+    t.addEventListener('click',function(){ document.documentElement.setAttribute('data-tema', cur()==='dark'?'light':'dark'); });
+  })();
+</script>
+<!--lectura-facil-v1-->
+<button class="lf-btn" id="lfBtn" type="button" aria-pressed="false" aria-label="Activar o desactivar el modo de lectura fácil para dislexia"><span class="b">Aa</span> Lectura fácil</button>
+<script>
+  (function(){
+    var K="emma-lectura", el=document.documentElement, b=document.getElementById("lfBtn");
+    function set(on){
+      el.setAttribute("data-lectura", on?"facil":"normal");
+      b.setAttribute("aria-pressed", on?"true":"false");
+      b.lastChild.textContent = on ? " Lectura fácil ✓" : " Lectura fácil";
+      try{ localStorage.setItem(K, on?"1":"0"); }catch(e){}
+    }
+    var saved="0"; try{ saved=localStorage.getItem(K)||"0"; }catch(e){}
+    set(saved==="1");
+    b.addEventListener("click", function(){ set(el.getAttribute("data-lectura")!=="facil"); });
+  })();
+</script>
+
+</body>
+</html>

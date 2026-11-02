@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es" data-tema="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entrega para Ana</title>
+<style>
+  :root{
+    --bg:#faf7f2; --surface:#fff; --panel:#f3efe8; --ink:#241f1a; --soft:#574f45; --faint:#7a7065;
+    --line:rgba(60,40,20,.13); --line-soft:rgba(60,40,20,.07);
+    --accent:#c0562a; --accent-soft:rgba(192,86,42,.10);
+    --auto:#1f7a6b; --auto-soft:rgba(31,122,107,.12); --comm:#6a4a9c;
+    --fs:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif;
+    --serif:"Iowan Old Style","Palatino",Georgia,"Times New Roman",serif;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-tema="light"]){
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15); --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16); --comm:#b79ae6;
+    color-scheme:dark;
+  }}
+  :root[data-tema="dark"]{
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15); --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16); --comm:#b79ae6;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:18px/1.6 var(--fs);-webkit-font-smoothing:antialiased;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .wrap{max-width:720px;margin:0 auto;padding:36px 4px 90px}
+  .glifo{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tgl{position:fixed;top:14px;right:14px;z-index:9;background:var(--surface);border:1px solid var(--line);color:var(--soft);width:42px;height:42px;border-radius:12px;cursor:pointer;display:grid;place-items:center}
+  .tgl:focus-visible{outline:3px solid var(--auto);outline-offset:2px} .tgl .glifo{width:20px;height:20px}
+  .hero{padding:40px 0 26px;border-bottom:1px solid var(--line)}
+  .kick{font:700 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+  h1{font:600 clamp(34px,8vw,54px)/1.05 var(--serif);letter-spacing:-.02em;margin:0 0 18px;text-wrap:balance}
+  .sub{font:300 clamp(18px,3vw,22px)/1.5 var(--fs);color:var(--soft);max-width:56ch;margin:0 0 14px}
+  .note{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 17px;font-size:15px;color:var(--soft);margin:18px 0 0}
+  .note b{color:var(--ink)}
+  .list{padding:30px 0 10px}
+  .card{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:14px;transition:border-color .15s,transform .08s}
+  .card:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .card:focus-visible{outline:3px solid var(--auto);outline-offset:3px}
+  .num{flex:none;width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font:600 18px var(--serif)}
+  .card.start .num{background:var(--auto-soft);color:var(--auto)}
+  .tx{flex:1;min-width:0}
+  .tt{display:block;font:600 19px var(--serif);margin-bottom:3px}
+  .ds{display:block;font-size:14.5px;color:var(--faint);line-height:1.45}
+  .badge{display:inline-block;font:700 10px var(--fs);letter-spacing:.06em;text-transform:uppercase;color:var(--auto);background:var(--auto-soft);border-radius:999px;padding:3px 9px;margin-left:8px;vertical-align:1px}
+  .ar{flex:none;color:var(--faint);font-size:22px}
+  .foot{text-align:center;color:var(--faint);font-size:14px;margin-top:30px;line-height:1.6}
+  .arch{padding:26px 0 2px;border-bottom:1px solid var(--line)}
+  .arch h2{font:700 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+  .arch .lead{font:300 17px/1.5 var(--fs);color:var(--soft);max-width:56ch;margin:0 0 18px}
+  .nodes{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch}
+  .node{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 17px}
+  .node .nt{display:flex;align-items:center;gap:9px;font:600 16px var(--serif);margin-bottom:6px}
+  .node .nd{font-size:14px;color:var(--faint);line-height:1.46;margin:0}
+  .node.alu{border-color:color-mix(in srgb,var(--auto) 34%,var(--line))}
+  .node.doc{border-color:color-mix(in srgb,var(--comm) 34%,var(--line))}
+  .node .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .node.alu .dot{background:var(--auto)} .node.doc .dot{background:var(--comm)}
+  .lk{display:grid;place-items:center;color:var(--faint);font-size:22px;font-weight:600}
+  .ext{margin:14px 0 0;font-size:13.5px;color:var(--faint);text-align:center}
+  .ext b{color:var(--soft)}
+  .flowlink{display:flex;align-items:center;gap:10px;justify-content:center;margin:16px 0 2px;text-decoration:none;
+    background:var(--accent-soft);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 28%,var(--line));
+    border-radius:12px;padding:13px 16px;font:600 14.5px var(--fs);line-height:1.35;text-align:center}
+  .flowlink:hover{filter:brightness(.98);border-color:var(--accent)}
+  .flowlink:focus-visible{outline:3px solid var(--auto);outline-offset:3px}
+  @media(max-width:560px){.nodes{grid-template-columns:1fr}.lk{transform:rotate(90deg);padding:1px 0}}
+  .pido{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px 22px;margin:26px 0 4px}
+  .pido .kick2{font:700 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+  .pido-h{font:600 clamp(22px,4.6vw,30px)/1.12 var(--serif);letter-spacing:-.01em;margin:0 0 16px;text-wrap:balance}
+  .pido-list{counter-reset:p;list-style:none;margin:0;padding:0}
+  .pido-list li{position:relative;padding:0 0 16px 46px;font-size:16px;line-height:1.5;color:var(--ink)}
+  .pido-list li:last-child{padding-bottom:4px}
+  .pido-list li::before{counter-increment:p;content:counter(p);position:absolute;left:0;top:-2px;width:30px;height:30px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font:700 15px var(--serif);display:grid;place-items:center}
+  .pido-list li b{font-weight:650}
+  .pido-use{display:block;font-size:14px;color:var(--faint);margin-top:3px}
+  .pido-meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--soft)}
+  .pido-meta b{color:var(--ink)}
+</style>
+<!--lectura-facil-v1-->
+<style id="lf-style">
+  /* ===== Modo Lectura fácil (dislexia) · opt-in, DUA: otra forma de representar ===== */
+  html[data-lectura="facil"] body{
+    font-family:Verdana,Tahoma,"Trebuchet MS",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+    letter-spacing:.035em; word-spacing:.09em; line-height:1.75;
+  }
+  html[data-lectura="facil"] p,
+  html[data-lectura="facil"] li,
+  html[data-lectura="facil"] .st-b,
+  html[data-lectura="facil"] .ds,
+  html[data-lectura="facil"] .sub,
+  html[data-lectura="facil"] .lead,
+  html[data-lectura="facil"] .nd{
+    max-width:64ch; text-align:left !important; line-height:1.8;
+  }
+  html[data-lectura="facil"] em,
+  html[data-lectura="facil"] i{ font-style:normal; font-weight:600; }
+  html[data-lectura="facil"] h1,
+  html[data-lectura="facil"] h2,
+  html[data-lectura="facil"] h3{ letter-spacing:.005em; word-spacing:.04em; }
+  /* botón flotante */
+  .lf-btn{position:fixed;left:16px;bottom:16px;z-index:99999;display:inline-flex;align-items:center;gap:8px;
+    background:#1f7a6b;color:#fff;border:0;border-radius:999px;cursor:pointer;
+    font:600 14px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    padding:11px 15px;box-shadow:0 8px 22px -10px rgba(0,0,0,.5)}
+  .lf-btn:hover{filter:brightness(1.06)}
+  .lf-btn:focus-visible{outline:3px solid #c0562a;outline-offset:2px}
+  .lf-btn .b{font-weight:800;font-size:15px;letter-spacing:.02em}
+  html[data-lectura="facil"] .lf-btn{background:#c0562a}
+  @media (max-width:420px){ .lf-btn{padding:10px 13px;font-size:13px} }
+  @media print{ .lf-btn{display:none} }
+</style>
+
+</head>
+<body>
+<button class="tgl" id="tgl" aria-label="Cambiar entre modo claro y oscuro"><svg class="glifo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></svg></button>
+<div class="wrap">
+  <header class="hero">
+    <p class="kick">Para Ana García-Valcárcel</p>
+    <h1>SAC · EMMA — entrega para tu valoración.</h1>
+    <p class="sub">Querida Ana: aquí tienes, en un solo sitio, todo lo necesario para valorar la aplicación — verla funcionar, entender su método, situarla en el marco DUA y anotar tu juicio. Abajo te digo exactamente qué te pido y cuánto tiempo lleva.</p>
+    <div class="note"><b>Tu papel:</b> una valoración experta <b>puntual</b> de la aplicación como producto de tecnología educativa — no supervisión ni codirección. La validez causal corresponde al experimento preregistrado; aquí no se te pide eso.</div>
+  </header>
+
+  <section class="pido" aria-label="Lo que te pido">
+    <p class="kick2">Lo que te pido</p>
+    <h2 class="pido-h">Dos cosas concretas — y poco tiempo.</h2>
+    <ol class="pido-list">
+      <li><b>Rellena la rúbrica</b> y devuélvemela — es la tarjeta 5, con casillas y comentarios, y se exporta a PDF.<span class="pido-use">Esta valoración la presento en Hack4Edu.</span></li>
+      <li><b>Una breve carta de valoración experta, firmada</b>, sobre la importancia y la necesidad del proyecto en tus áreas (DUA, tecnología educativa, inclusión).<span class="pido-use">Te he dejado un borrador listo para que lo adaptes y lo firmes — tarjeta 6.</span></li>
+    </ol>
+    <div class="pido-meta">
+      <span><b>Tiempo:</b> 5 min la rúbrica · 20 min el recorrido completo</span>
+      <span><b>Para cuándo:</b> antes de la final de Hack4Edu</span>
+    </div>
+  </section>
+
+  <section class="arch">
+    <h2>Un sistema, no una app</h2>
+    <p class="lead">EMMA no es una aplicación de alumno: es un sistema con, al menos, <b>dos nódulos</b> que se necesitan. La app que verás en la tarjeta 1 es solo uno de ellos.</p>
+    <div class="nodes">
+      <div class="node alu"><div class="nt"><span class="dot"></span>Nódulo del alumno</div><p class="nd">La app que ves. Aprende haciendo, demuestra comprensión —reformula, transfiere, objeta, pone límites— y gana autonomía. Offline y soberana.</p></div>
+      <div class="lk" aria-hidden="true">⟷</div>
+      <div class="node doc"><div class="nt"><span class="dot"></span>Nódulo del docente</div><p class="nd">Acompaña y, sobre todo, retira el andamiaje a tiempo. Lee los <b>procesos</b> —no corrige productos— y decide cuándo apartarse.</p></div>
+    </div>
+    <p class="ext">Como extensión del mismo sistema: <b>institución</b> (evidencia agregada, sin vigilar) e <b>investigador</b> (datos del experimento). Los ves en la tarjeta 4.</p>
+    <a class="flowlink" href="FLUJO_EMMA_estilo_Apple.html">Ver el ciclo completo: alumno → docente → materiales → desarrollo profesional →</a>
+  </section>
+
+  <nav class="list">
+    <a class="card start" href="portada.html">
+      <span class="num">1</span><span class="tx"><span class="tt">La aplicación <span class="badge">empieza aquí</span></span><span class="ds">El demo interactivo. Abre la portada y pulsa <b>"Soy Ana"</b> para ir directa al <b>Recorrido</b>: las 3 capas, los 4 roles y el mapa "Qué evaluar".</span></span><span class="ar">→</span></a>
+
+    <a class="card" href="SAC_explicado_metodo_estilo_Apple.html">
+      <span class="num">2</span><span class="tx"><span class="tt">El SAC, explicado</span><span class="ds">El método: inteligencia extendida, comprensión demostrable, juicio ciego e hipótesis de barrera, y evaluación por procesos (no instrumentos).</span></span><span class="ar">→</span></a>
+
+    <a class="card" href="EMMA_x_DUA_crosswalk_estilo_Apple.html">
+      <span class="num">3</span><span class="tx"><span class="tt">EMMA × DUA — el crosswalk</span><span class="ds">Los 3 principios y 9 pautas del CAST, columna a columna: cómo EMMA los lleva a la práctica y los democratiza.</span></span><span class="ar">→</span></a>
+
+    <a class="card" href="IMPLEMENTACIONES_EMMA_estilo_Apple.html">
+      <span class="num">4</span><span class="tx"><span class="tt">Implementaciones y ayudas</span><span class="ds">Todo por rol —estudiante, docente, docente investigador, institución—, las competencias digitales, los marcos y cómo evalúa.</span></span><span class="ar">→</span></a>
+
+    <a class="card" href="GUIA_evaluacion_Ana_estilo_Apple.html">
+      <span class="num">5</span><span class="tx"><span class="tt">Guía de evaluación <span class="badge">para anotar</span></span><span class="ds">La rúbrica: 9 áreas (tu campo DUA + el acabado de calidad), con casillas y comentarios. Exportable a PDF.</span></span><span class="ar">→</span></a>
+    <a class="card" href="CARTA_valoracion_borrador_Ana.html">
+      <span class="num">6</span><span class="tx"><span class="tt">Carta de valoración <span class="badge">guiada</span></span><span class="ds">Los puntos sobre los que te pido que te mojes — los mismos de la rúbrica — en tus palabras, y un texto ya redactado opcional.</span></span><span class="ar">→</span></a>
+
+  </nav>
+
+  <p class="foot">EMMA · SAC · xI — Diego Elvira Vásquez · Inteligencia Extendida (xI) · Candidatura Hack4Edu 2026 (SENIOR) · ProFuturo × UPSA<br>Gracias por tu tiempo y tu criterio.</p>
+</div>
+<script>
+  (function(){
+    var t=document.getElementById('tgl');
+    function cur(){ return document.documentElement.getAttribute('data-tema')==='dark'||(document.documentElement.getAttribute('data-tema')!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'; }
+    t.addEventListener('click',function(){ document.documentElement.setAttribute('data-tema', cur()==='dark'?'light':'dark'); });
+  })();
+</script>
+<!--lectura-facil-v1-->
+<button class="lf-btn" id="lfBtn" type="button" aria-pressed="false" aria-label="Activar o desactivar el modo de lectura fácil para dislexia"><span class="b">Aa</span> Lectura fácil</button>
+<script>
+  (function(){
+    var K="emma-lectura", el=document.documentElement, b=document.getElementById("lfBtn");
+    function set(on){
+      el.setAttribute("data-lectura", on?"facil":"normal");
+      b.setAttribute("aria-pressed", on?"true":"false");
+      b.lastChild.textContent = on ? " Lectura fácil ✓" : " Lectura fácil";
+      try{ localStorage.setItem(K, on?"1":"0"); }catch(e){}
+    }
+    var saved="0"; try{ saved=localStorage.getItem(K)||"0"; }catch(e){}
+    set(saved==="1");
+    b.addEventListener("click", function(){ set(el.getAttribute("data-lectura")!=="facil"); });
+  })();
+</script>
+
+</body>
+</html>

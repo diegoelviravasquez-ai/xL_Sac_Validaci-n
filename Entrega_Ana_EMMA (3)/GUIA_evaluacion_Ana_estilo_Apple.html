@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es" data-tema="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guía de evaluación — para Ana</title>
+<style>
+  :root{
+    --bg:#faf7f2; --surface:#fff; --panel:#f3efe8; --ink:#241f1a; --soft:#574f45; --faint:#7a7065;
+    --line:rgba(60,40,20,.13); --line-soft:rgba(60,40,20,.07);
+    --accent:#c0562a; --accent-soft:rgba(192,86,42,.10);
+    --auto:#1f7a6b; --auto-soft:rgba(31,122,107,.12);
+    --comm:#6a4a9c; --comm-soft:rgba(106,74,156,.12);
+    --tierra:#9a6611;
+    --fs:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif;
+    --serif:"Iowan Old Style","Palatino",Georgia,"Times New Roman",serif;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-tema="light"]){
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15);
+    --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16); --comm:#b79ae6; --tierra:#e0a53f;
+    color-scheme:dark;
+  }}
+  :root[data-tema="dark"]{
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15);
+    --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16); --comm:#b79ae6; --tierra:#e0a53f;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:18px/1.6 var(--fs);-webkit-font-smoothing:antialiased;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 4px 90px}
+  .glifo{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .tgl{position:fixed;top:14px;right:14px;z-index:9;background:var(--surface);border:1px solid var(--line);color:var(--soft);width:42px;height:42px;border-radius:12px;cursor:pointer;display:grid;place-items:center}
+  .tgl:focus-visible{outline:3px solid var(--auto);outline-offset:2px} .tgl .glifo{width:20px;height:20px}
+  .hero{padding:42px 0 26px;border-bottom:1px solid var(--line)}
+  .kick{font:700 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+  h1{font:600 clamp(32px,7vw,50px)/1.06 var(--serif);letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+  .sub{font:300 clamp(18px,3vw,22px)/1.4 var(--fs);color:var(--soft);max-width:40ch;margin:0}
+  .role-note{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:22px 0 0;font-size:15px;color:var(--soft)}
+  .role-note b{color:var(--ink)}
+  section{padding:34px 0;border-bottom:1px solid var(--line)}
+  .seclabel{font:700 12px var(--fs);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 6px}
+  .bl{font:700 12px var(--fs);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+  .bl.b{color:var(--auto)}
+  h2{font:600 clamp(22px,4.5vw,30px)/1.14 var(--serif);margin:0 0 14px}
+  .intro{font:300 19px/1.5 var(--fs);color:var(--soft);margin:0 0 18px;max-width:62ch}
+  .marcos{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+  .marco{font:600 13px var(--fs);border-radius:10px;padding:8px 13px;background:var(--panel);border:1px solid var(--line);color:var(--soft)} .marco b{color:var(--ink)}
+  .area{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 14px}
+  .area .an{display:flex;gap:11px;align-items:baseline;margin:0 0 8px}
+  .area .num{font:700 14px var(--fs);color:var(--accent);flex:none} .area.b2 .num{color:var(--auto)}
+  .area h3{font:600 19px var(--serif);margin:0}
+  .area p{font-size:15.5px;color:var(--soft);margin:0 0 6px;max-width:none}
+  .area .donde{font-size:13.5px;color:var(--faint);margin:0 0 14px}
+  .verdict{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 10px}
+  .vopt{display:inline-flex;gap:8px;align-items:center;font:600 14px var(--fs);color:var(--soft);cursor:pointer;user-select:none}
+  .vopt input{appearance:none;-webkit-appearance:none;width:20px;height:20px;border:2px solid var(--line);border-radius:6px;cursor:pointer;position:relative;margin:0}
+  .vopt input:focus-visible{outline:3px solid var(--auto);outline-offset:2px}
+  .vopt.ok input:checked{background:var(--auto);border-color:var(--auto)}
+  .vopt.mid input:checked{background:var(--tierra);border-color:var(--tierra)}
+  .vopt.no input:checked{background:var(--accent);border-color:var(--accent)}
+  .vopt input:checked::after{content:"";position:absolute;left:5px;top:1px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+  .comment{display:block;width:100%;min-height:54px;resize:vertical;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font:400 15px/1.5 var(--fs);color:var(--ink)}
+  .comment:focus-visible{outline:3px solid var(--auto);outline-offset:2px;border-color:var(--auto)}
+  .rec{list-style:none;margin:10px 0 0;padding:0;counter-reset:r;display:flex;flex-wrap:wrap;gap:8px}
+  .rec li{counter-increment:r;font:600 14px var(--fs);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 14px;color:var(--soft)}
+  .rec li::before{content:counter(r) " · ";color:var(--accent);font-weight:700}
+  .close textarea{min-height:70px}
+  .foot{text-align:center;color:var(--faint);font-size:14px;margin-top:36px;line-height:1.6}
+  @media print{.tgl{display:none}}
+</style>
+<!--lectura-facil-v1-->
+<style id="lf-style">
+  /* ===== Modo Lectura fácil (dislexia) · opt-in, DUA: otra forma de representar ===== */
+  html[data-lectura="facil"] body{
+    font-family:Verdana,Tahoma,"Trebuchet MS",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+    letter-spacing:.035em; word-spacing:.09em; line-height:1.75;
+  }
+  html[data-lectura="facil"] p,
+  html[data-lectura="facil"] li,
+  html[data-lectura="facil"] .st-b,
+  html[data-lectura="facil"] .ds,
+  html[data-lectura="facil"] .sub,
+  html[data-lectura="facil"] .lead,
+  html[data-lectura="facil"] .nd{
+    max-width:64ch; text-align:left !important; line-height:1.8;
+  }
+  html[data-lectura="facil"] em,
+  html[data-lectura="facil"] i{ font-style:normal; font-weight:600; }
+  html[data-lectura="facil"] h1,
+  html[data-lectura="facil"] h2,
+  html[data-lectura="facil"] h3{ letter-spacing:.005em; word-spacing:.04em; }
+  /* botón flotante */
+  .lf-btn{position:fixed;left:16px;bottom:16px;z-index:99999;display:inline-flex;align-items:center;gap:8px;
+    background:#1f7a6b;color:#fff;border:0;border-radius:999px;cursor:pointer;
+    font:600 14px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    padding:11px 15px;box-shadow:0 8px 22px -10px rgba(0,0,0,.5)}
+  .lf-btn:hover{filter:brightness(1.06)}
+  .lf-btn:focus-visible{outline:3px solid #c0562a;outline-offset:2px}
+  .lf-btn .b{font-weight:800;font-size:15px;letter-spacing:.02em}
+  html[data-lectura="facil"] .lf-btn{background:#c0562a}
+  @media (max-width:420px){ .lf-btn{padding:10px 13px;font-size:13px} }
+  @media print{ .lf-btn{display:none} }
+</style>
+
+</head>
+<body>
+<button class="tgl" id="tgl" aria-label="Cambiar entre modo claro y oscuro"><svg class="glifo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></svg></button>
+<div class="wrap">
+  <header class="hero">
+    <p class="kick">Para Ana García-Valcárcel · valoración experta</p>
+    <h1>Guía de evaluación.</h1>
+    <p class="sub">Qué evaluar de la aplicación, desde tu campo (Tecnología Educativa, DUA e inclusión) y su acabado de calidad. Con casillas para anotar.</p>
+    <div class="role-note"><b>Tu papel:</b> una valoración experta <b>puntual</b> de la aplicación — no supervisión, no codirección, y no la validación psicométrica/causal (eso corresponde al experimento preregistrado). Aquí evalúas la app como producto de tecnología educativa.</div>
+  </header>
+
+  <section>
+    <p class="seclabel">Marco de referencia</p>
+    <h2>Contra qué contrastar.</h2>
+    <div class="marcos"><span class="marco"><b>DUA</b> · CAST (3 principios)</span><span class="marco">Accesibilidad · WCAG</span><span class="marco">Usabilidad / UX</span><span class="marco">Robustez en el aula real</span></div>
+    <p class="intro" style="margin-top:16px"><b>Recorrido sugerido (10 min):</b></p>
+    <ol class="rec"><li>La app · Recorrido para Ana</li><li>Qué evaluar (el mapa)</li><li>Leer → Comprender → Pensar</li><li>Rol Docente (juicio ciego)</li><li>Rol Estado (k-anónimo)</li></ol>
+  </section>
+
+  <section>
+    <p class="bl">Bloque A · desde tu campo (pedagógico · DUA)</p>
+    <h2>Calidad pedagógica.</h2>
+
+    <div class="area"><div class="an"><span class="num">1</span><h3>DUA · Representación</h3></div>
+      <p>¿Hay múltiples formas de presentar lo mismo (texto fácil, glosa, base para audio)? ¿El acceso reduce barreras sin simplificar el contenido? ¿El lenguaje es claro y comprensible en contexto mexicano?</p>
+      <p class="donde">Dónde: <i>Comprender</i> (acceso/glosa) + panel κ.</p>
+      <div class="verdict"><label class="vopt ok"><input type="checkbox" name="a1"> sólido</label><label class="vopt mid"><input type="checkbox" name="a1"> a matizar</label><label class="vopt no"><input type="checkbox" name="a1"> a corregir</label></div>
+      <textarea class="comment" placeholder="Comentario…"></textarea></div>
+
+    <div class="area"><div class="an"><span class="num">2</span><h3>DUA · Acción y expresión</h3></div>
+      <p>¿Puede el alumno demostrar lo que sabe de más de una manera? <b>Hueco reconocido:</b> hoy se demuestra solo por escrito — ¿debería admitir voz/dictado? ¿Se evalúa la competencia y no la destreza de teclear?</p>
+      <p class="donde">Dónde: <i>Comprender</i> (las 4 operaciones).</p>
+      <div class="verdict"><label class="vopt ok"><input type="checkbox"> sólido</label><label class="vopt mid"><input type="checkbox"> a matizar</label><label class="vopt no"><input type="checkbox"> a corregir</label></div>
+      <textarea class="comment" placeholder="Comentario…"></textarea></div>
+
+    <div class="area"><div class="an"><span class="num">3</span><h3>DUA · Implicación</h3></div>
+      <p>¿La motivación es sana — progreso diegético, sin XP ni rachas? ¿La entrada circunstancial adapta sin volverse termómetro emocional? ¿La autonomía creciente (κ) es el verdadero refuerzo?</p>
+      <p class="donde">Dónde: entrada circunstancial + home.</p>
+      <div class="verdict"><label class="vopt ok"><input type="checkbox"> sólido</label><label class="vopt mid"><input type="checkbox"> a matizar</label><label class="vopt no"><input type="checkbox"> a corregir</label></div>
+      <textarea class="comment" placeholder="Comentario…"></textarea></div>
+
+    <div class="area"><div class="an"><span class="num">4</span><h3>Diseño instruccional</h3></div>
+      <p>¿La secuencia leer → comprender → pensar es coherente y se ve en la interfaz? ¿La tarea es auténtica? ¿La comprensión demostrable está bien llevada a pantalla (4 operaciones legibles)?</p>
+      <p class="donde">Dónde: <i>Recorrido</i> + <i>Comprender</i>.</p>
+      <div class="verdict"><label class="vopt ok"><input type="checkbox"> sólido</label><label class="vopt mid"><input type="checkbox"> a matizar</label><label class="vopt no"><input type="checkbox"> a corregir</label></div>
+      <textarea class="comment" placeholder="Comentario…"></textarea></div>
+
+    <div class="area"><div class="an"><span class="num">5</span><h3>Andamiaje visible</h3></div>
+      <p>¿Se ve el andamio retirarse por criterio (no por tiempo)? ¿La frontera acceso (derecho) / procesamiento (temporal) queda clara? ¿La restitución sin castigo se entiende?</p>
+      <p class="donde">Dónde: panel κ en <i>Taller</i> + <i>Docente</i>.</p>
+      <div class="verdict"><label class="vopt ok"><input type="checkbox"> sólido</label><label class="vopt mid"><input type="checkbox"> a matizar</label><label class="vopt no"><input type="checkbox"> a corregir</label></div>
+      <textarea class="comment" placeholder="Comentario…"></textarea></div>
+    <div class="area"><div class="an"><span class="num">6</span><h3>Evaluación por procesos y la medida</h3></div>
+      <p>¿La evaluación es <b>por procesos</b> y no por un instrumento único? ¿La comprensión demostrable (reformula/transfiere/objeta/límites, ≥3/4) y <b>κ</b> son una forma legítima de saber que se comprendió? ¿El <b>juicio ciego</b> del docente —decide antes de ver la sugerencia— y el marco de competencias (DigComp/ÁUREA) preservan su autonomía profesional?</p>
+      <p class="donde">Dónde: <i>Comprender</i> (4 operaciones) + panel κ + rol <i>Docente</i>.</p>
+      <div class="verdict"><label class="vopt ok"><input type="checkbox"> sólido</label><label class="vopt mid"><input type="checkbox"> a matizar</label><label class="vopt no"><input type="checkbox"> a corregir</label></div>
+      <textarea class="comment" placeholder="Comentario…"></textarea></div>
+  </section>
+
+  <section>
+    <p class="bl b">Bloque B · acabado de calidad (técnico)</p>
+    <h2>El acabado.</h2>
+
+    <div class="area b2"><div class="an"><span class="num">7</span><h3>Accesibilidad técnica (a11y / WCAG)</h3></div>
+      <p>¿Navegable por teclado, con foco visible? ¿Contraste suficiente, roles/aria, respeta "reducir movimiento"? ¿Objetivos táctiles ≥44px en tablet compartida?</p>
+      <p class="donde">Dónde: transversal (prueba con teclado / lector).</p>
+      <div class="verdict"><label class="vopt ok"><input type="checkbox"> sólido</label><label class="vopt mid"><input type="checkbox"> a matizar</label><label class="vopt no"><input type="checkbox"> a corregir</label></div>
+      <textarea class="comment" placeholder="Comentario…"></textarea></div>
+
+    <div class="area b2"><div class="an"><span class="num">8</span><h3>Usabilidad y UX</h3></div>
+      <p>¿Navegación clara y consistente, con baja carga cognitiva? ¿Los errores no culpabilizan (sin rojo para la persona)? ¿Se orientan sin manual?</p>
+      <p class="donde">Dónde: toda la app.</p>
+      <div class="verdict"><label class="vopt ok"><input type="checkbox"> sólido</label><label class="vopt mid"><input type="checkbox"> a matizar</label><label class="vopt no"><input type="checkbox"> a corregir</label></div>
+      <textarea class="comment" placeholder="Comentario…"></textarea></div>
+
+    <div class="area b2"><div class="an"><span class="num">9</span><h3>Robustez y acabado</h3></div>
+      <p>¿Funciona de verdad offline, en un solo archivo, sin dependencias? ¿Rinde en tablet modesta (3 GB)? ¿El sistema de diseño es coherente y sin bugs — pulido profesional?</p>
+      <p class="donde">Dónde: toda la app (y sin red).</p>
+      <div class="verdict"><label class="vopt ok"><input type="checkbox"> sólido</label><label class="vopt mid"><input type="checkbox"> a matizar</label><label class="vopt no"><input type="checkbox"> a corregir</label></div>
+      <textarea class="comment" placeholder="Comentario…"></textarea></div>
+  </section>
+
+  <section class="close" style="border-bottom:none">
+    <p class="seclabel">Cierre</p>
+    <h2>Valoración global.</h2>
+    <textarea class="comment" placeholder="Valoración global de la aplicación…"></textarea>
+    <p class="intro" style="margin:16px 0 6px"><b>Lo más logrado:</b></p>
+    <textarea class="comment" placeholder="…"></textarea>
+    <p class="intro" style="margin:16px 0 6px"><b>Lo que matizaría o corregiría:</b></p>
+    <textarea class="comment" placeholder="…"></textarea>
+    <p class="foot" style="text-align:left;margin-top:20px">La app funciona offline; lo que clasifica (comprensión, barrera) corre en el nodo del aula, no en la tablet. Esta valoración es sobre el producto; la validez causal corresponde al experimento preregistrado.</p>
+  </section>
+
+  <p class="foot">EMMA · SAC · xI — Diego Elvira Vásquez · Inteligencia Extendida (xI) · Hack4Edu 2026 (SENIOR) · ProFuturo × UPSA<br><i>Las anotaciones son locales a este dispositivo: para conservarlas, exporta la página a PDF.</i></p>
+</div>
+<script>
+  (function(){
+    var t=document.getElementById('tgl');
+    function cur(){ return document.documentElement.getAttribute('data-tema')==='dark'||(document.documentElement.getAttribute('data-tema')!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'; }
+    t.addEventListener('click',function(){ document.documentElement.setAttribute('data-tema', cur()==='dark'?'light':'dark'); });
+  })();
+</script>
+<!--lectura-facil-v1-->
+<button class="lf-btn" id="lfBtn" type="button" aria-pressed="false" aria-label="Activar o desactivar el modo de lectura fácil para dislexia"><span class="b">Aa</span> Lectura fácil</button>
+<script>
+  (function(){
+    var K="emma-lectura", el=document.documentElement, b=document.getElementById("lfBtn");
+    function set(on){
+      el.setAttribute("data-lectura", on?"facil":"normal");
+      b.setAttribute("aria-pressed", on?"true":"false");
+      b.lastChild.textContent = on ? " Lectura fácil ✓" : " Lectura fácil";
+      try{ localStorage.setItem(K, on?"1":"0"); }catch(e){}
+    }
+    var saved="0"; try{ saved=localStorage.getItem(K)||"0"; }catch(e){}
+    set(saved==="1");
+    b.addEventListener("click", function(){ set(el.getAttribute("data-lectura")!=="facil"); });
+  })();
+</script>
+
+</body>
+</html>

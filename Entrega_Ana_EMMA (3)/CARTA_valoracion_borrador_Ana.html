@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es" data-tema="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tu carta de valoración</title>
+<style>
+  :root{
+    --bg:#faf7f2; --surface:#fff; --panel:#f3efe8; --ink:#241f1a; --soft:#574f45; --faint:#7a7065;
+    --line:rgba(60,40,20,.13); --line-soft:rgba(60,40,20,.07);
+    --accent:#c0562a; --accent-soft:rgba(192,86,42,.10);
+    --auto:#1f7a6b; --auto-soft:rgba(31,122,107,.12);
+    --fs:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif;
+    --serif:"Iowan Old Style","Palatino",Georgia,"Times New Roman",serif;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-tema="light"]){
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15); --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16);
+    color-scheme:dark;
+  }}
+  :root[data-tema="dark"]{
+    --bg:#121110; --surface:#1d1a16; --panel:#242019; --ink:#f3ede4; --soft:#cbc1b4; --faint:#9c9284;
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.06);
+    --accent:#e8824f; --accent-soft:rgba(232,130,79,.15); --auto:#3fb89f; --auto-soft:rgba(63,184,159,.16);
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:17px/1.65 var(--fs);-webkit-font-smoothing:antialiased;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .wrap{max-width:720px;margin:0 auto;padding:30px 4px 90px}
+  .glifo{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .tgl{position:fixed;top:14px;right:14px;z-index:9;background:var(--surface);border:1px solid var(--line);color:var(--soft);width:42px;height:42px;border-radius:12px;cursor:pointer;display:grid;place-items:center}
+  .tgl:focus-visible{outline:3px solid var(--auto);outline-offset:2px}.tgl .glifo{width:20px;height:20px}
+  .back{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--faint);font-size:14px;font-weight:600;margin-bottom:20px}
+  .back:hover{color:var(--accent)}
+
+  .hero{padding:4px 0 22px;border-bottom:1px solid var(--line)}
+  .kick{font:700 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+  h1{font:600 clamp(28px,6.5vw,42px)/1.08 var(--serif);letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+  .aviso{font:300 clamp(17px,2.6vw,20px)/1.5 var(--fs);color:var(--soft);max-width:60ch;margin:0}
+  .aviso b{color:var(--ink);font-weight:600}
+
+  /* Los puntos guía */
+  .puntos{padding:30px 0 6px}
+  .pt{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;margin:0 0 14px}
+  .pt .hd{display:flex;align-items:baseline;gap:11px;margin:0 0 8px}
+  .pt .num{flex:none;width:30px;height:30px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font:700 15px var(--serif);display:grid;place-items:center}
+  .pt h3{font:600 19px var(--serif);margin:0;line-height:1.2}
+  .pt .q{font-size:15.5px;color:var(--soft);line-height:1.55;margin:0 0 10px}
+  .pt .q b{color:var(--ink);font-weight:600}
+  .pt .map{display:inline-flex;align-items:center;gap:7px;font:600 12px var(--fs);color:var(--auto);background:var(--auto-soft);border-radius:999px;padding:5px 11px}
+  .pt .map .glifo{width:14px;height:14px}
+
+  /* Borrador opcional */
+  .opt{margin:38px 0 0;padding:26px 0 0;border-top:2px solid var(--line)}
+  .opt .lbl{font:700 12px var(--fs);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 6px}
+  .opt h2{font:600 clamp(21px,4.4vw,27px)/1.15 var(--serif);margin:0 0 8px}
+  .opt .note{font-size:15px;color:var(--soft);margin:0 0 20px;max-width:60ch}
+  .carta{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:34px clamp(20px,5vw,40px)}
+  @media print{.carta{border:none;border-radius:0;padding:0;background:#fff}}
+  .membrete{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:24px}
+  .membrete .n{font:600 19px var(--serif);margin:0 0 2px}
+  .membrete .c{font-size:14px;color:var(--soft);margin:0;line-height:1.5}
+  .carta h3.tt{font:600 clamp(20px,4vw,25px)/1.2 var(--serif);margin:0 0 4px;letter-spacing:-.01em}
+  .carta .fecha{font-size:14px;color:var(--faint);margin:0 0 22px}
+  .carta p{margin:0 0 14px;max-width:64ch;color:var(--ink)}
+  .carta .dest{color:var(--soft);margin-bottom:20px}
+  .ph{background:var(--auto-soft);border-radius:4px;padding:0 4px;color:var(--ink);font-style:italic}
+  .firma{margin-top:30px;border-top:1px solid var(--line-soft);padding-top:18px}
+  .firma .l{display:block;height:32px}
+  .firma .n{font:600 16px var(--serif);margin:0}
+  .firma .c{font-size:14px;color:var(--soft);margin:2px 0 0;line-height:1.5}
+  .foot{text-align:center;color:var(--faint);font-size:13.5px;margin-top:26px;line-height:1.6}
+  @media print{.tgl,.back,.hero,.puntos,.opt .lbl,.opt h2,.opt .note,.foot{display:none}.opt{border:none;margin:0;padding:0}}
+</style>
+</head>
+<body>
+<button class="tgl" id="tgl" aria-label="Cambiar entre modo claro y oscuro"><svg class="glifo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></svg></button>
+<div class="wrap">
+  <a class="back" href="index.html"><svg class="glifo" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px"><path d="M15 6l-6 6 6 6"/></svg>Volver a la entrega</a>
+
+  <header class="hero">
+    <p class="kick">Para Ana · tu carta de valoración</p>
+    <h1>Lo que te pido que valores — en tus palabras.</h1>
+    <p class="aviso">No quiero ponerte palabras en la boca. Aquí tienes los <b>puntos sobre los que te pido que te mojes</b>: son los mismos de la rúbrica, para que tu carta diga exactamente lo que evaluaste. Escríbelo como lo pienses. Y si prefieres no partir de cero, <b>al final te dejo un texto ya redactado</b> — úsalo, cámbialo o ignóralo.</p>
+  </header>
+
+  <section class="puntos">
+
+    <article class="pt">
+      <div class="hd"><span class="num">1</span><h3>Calidad pedagógica — el DUA, en la práctica</h3></div>
+      <p class="q">¿EMMA <b>lleva el DUA a la práctica y lo democratiza</b>? ¿Articula bien representación, acción/expresión e implicación? ¿La <b>comprensión demostrable</b> y el <b>andamiaje que se retira por criterio</b> (acceso = derecho, procesamiento = temporal) funcionan de verdad en pantalla?</p>
+      <span class="map"><svg class="glifo" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Rúbrica · áreas 1–5</span>
+    </article>
+
+    <article class="pt">
+      <div class="hd"><span class="num">2</span><h3>El sistema de evaluación y la medida</h3></div>
+      <p class="q">¿Evalúa <b>por procesos y no por un instrumento único</b>? ¿La comprensión demostrable y <b>κ</b> son una forma legítima de saber que se comprendió? ¿El <b>juicio ciego</b> del docente —que decide antes de ver la sugerencia— y el marco de competencias (DigComp/ÁUREA) preservan su autonomía profesional?</p>
+      <span class="map"><svg class="glifo" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Rúbrica · área 6</span>
+    </article>
+
+    <article class="pt">
+      <div class="hd"><span class="num">3</span><h3>Accesibilidad, inclusión y acabado</h3></div>
+      <p class="q">¿La accesibilidad técnica, la usabilidad y la <b>robustez offline</b> están a la altura de un producto? ¿La <b>soberanía</b> (sin nube, sin cuenta, sin datos fuera) lo hace viable en contextos de <b>baja conectividad e inclusión</b>?</p>
+      <span class="map"><svg class="glifo" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Rúbrica · áreas 7–9</span>
+    </article>
+
+    <article class="pt">
+      <div class="hd"><span class="num">4</span><h3>Importancia y necesidad en tu campo</h3></div>
+      <p class="q">¿Por qué hace falta algo así? El aprendizaje personalizado sigue siendo, en la práctica, un privilegio de contextos con recursos. ¿Qué aporta una herramienta que respeta la autonomía del alumno <b>y</b> del docente, y que llega a quien los entornos digitales suelen dejar fuera?</p>
+      <span class="map"><svg class="glifo" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>Tu perspectiva experta</span>
+    </article>
+
+    <article class="pt">
+      <div class="hd"><span class="num">5</span><h3>Alcance honesto — una línea</h3></div>
+      <p class="q">Si te parece, deja constancia de que es un <b>instrumento de medida, no una prueba de eficacia</b> ya demostrada: la validez causal corresponde al experimento preregistrado. Esa prudencia suma credibilidad, no la resta.</p>
+      <span class="map"><svg class="glifo" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Guardarraíl de honestidad</span>
+    </article>
+
+  </section>
+
+  <section class="opt">
+    <p class="lbl">Opcional</p>
+    <h2>Si prefieres partir de un texto ya redactado.</h2>
+    <p class="note">Un punto de partida con los cinco puntos de arriba ya hilados. Cámbialo entero a lo que de verdad pienses — con firmarlo (en papel o PDF) me basta. Lleva huecos en verde para completar.</p>
+
+    <div class="carta">
+      <div class="membrete">
+        <p class="n">Ana García-Valcárcel Muñoz-Repiso</p>
+        <p class="c"><span class="ph">[tu cargo / categoría, como lo pongas tú]</span> · Universidad de Salamanca<br><span class="ph">[correo / departamento, si quieres incluirlo]</span></p>
+      </div>
+
+      <h3 class="tt">Valoración experta de la aplicación EMMA (SAC)</h3>
+      <p class="fecha">Salamanca, <span class="ph">[fecha]</span></p>
+
+      <p class="dest">A quien corresponda — Comité de Hack4Edu 2026 (ProFuturo · Universidad Pontificia de Salamanca):</p>
+
+      <p>En mi condición de <span class="ph">[tu cargo]</span> de la Universidad de Salamanca, con trayectoria en Diseño Universal para el Aprendizaje (DUA), inclusión y competencias digitales, he revisado la aplicación <b>EMMA</b>, desarrollada por Diego Elvira Vásquez en el marco del Sistema de Aprendizaje Circunstancial (SAC). Emito esta valoración sobre la aplicación <b>como producto de tecnología educativa</b>; la validación causal de su eficacia corresponde al experimento preregistrado que el proyecto plantea, y no es objeto de esta carta.</p>
+
+      <p>Mi valoración es <span class="ph">[positiva / favorable — ajústalo]</span>. EMMA no se limita a invocar el DUA: lo <b>lleva a la práctica y lo democratiza</b>. Articula los tres principios del marco —representación, acción y expresión, e implicación— con herramientas concretas y utilizables en el aula real: una <b>comprensión demostrable</b> observable, un <b>andamiaje que se retira por criterio</b> y se restituye sin castigo, y una frontera explícita entre lo que es <b>acceso</b> (un derecho que no se retira) y lo que es <b>procesamiento</b> (un apoyo temporal).</p>
+
+      <p>Me parece <span class="ph">[especialmente valioso / discutible en…]</span> que el sistema evalúe <b>por procesos y no por instrumentos</b>, que el estado del alumno se recoja por autoinforme y no por inferencia —en línea con el art. 5.1.f del Reglamento de IA de la UE—, que el <b>juicio ciego</b> del docente preserve su autonomía profesional, y que funcione de forma <b>soberana y sin conexión</b>. Considero que una propuesta así <b>es necesaria</b>: el aprendizaje personalizado sigue siendo, en la práctica, un privilegio de contextos con recursos, y una herramienta offline, accesible y respetuosa con la autonomía atiende justamente a la población que los entornos digitales suelen dejar fuera, incluidos los contextos de baja conectividad e inclusión. <span class="ph">[Aquí, si quieres, una frase tuya sobre por qué esto importa en tu campo.]</span></p>
+
+      <p>Quiero subrayar un rasgo que refuerza su credibilidad: el proyecto es <b>honesto sobre su alcance</b>. Se presenta como un instrumento de medida, no como una prueba de eficacia ya demostrada. Esa prudencia metodológica es, a mi juicio, una fortaleza y no una carencia.</p>
+
+      <p>Por todo ello, <span class="ph">[valoro favorablemente / recomiendo]</span> la candidatura de EMMA (SAC) a la modalidad SENIOR de Hack4Edu 2026, y quedo a disposición del comité para cualquier aclaración.</p>
+
+      <div class="firma">
+        <span class="l"></span>
+        <p class="n">Fdo.: Ana García-Valcárcel Muñoz-Repiso</p>
+        <p class="c"><span class="ph">[tu cargo]</span> · Universidad de Salamanca</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="foot">Guía de cortesía · escríbelo en tus palabras · el texto opcional se exporta a PDF desde el menú de impresión del navegador.</p>
+</div>
+<script>
+  (function(){
+    var t=document.getElementById('tgl');
+    function cur(){ return document.documentElement.getAttribute('data-tema')==='dark'||(document.documentElement.getAttribute('data-tema')!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'; }
+    t.addEventListener('click',function(){ document.documentElement.setAttribute('data-tema', cur()==='dark'?'light':'dark'); });
+  })();
+</script>
+</body>
+</html>
